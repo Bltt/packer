@@ -1,0 +1,32 @@
+{
+    "builders":  [
+    		{
+	    	"type"	        	: "googlecompute",
+		"account_file"  	: "/home/vagrant/.gcp/terraform_key.json",
+                "project_id"    	: "able-current-214108",
+		"source_image_family"  	: "centos-7",
+		"ssh_username"  	: "terraform",
+		"region" 		: "europe-west2",
+		"zone"			: "europe-west2-c",
+		"disk_size"		: 10,
+		"machine_type" 		: "f1-micro",
+		"image_description" 	: "up to date centos",
+		"image_name"		: "mark-centos-{{timestamp}}"
+		}
+	], 
+    "provisioners": [
+    		{
+		"type"   : "shell",
+		"inline" : [ "sudo yum -y update" ]
+		},
+		{
+		"type"   : "shell",
+		"script" : "/home/vagrant/packer/get_packages"
+		},
+		{
+		"type"   : "shell",
+		"script" : "/home/vagrant/terraform/scripts/install_pyserver"
+		}
+	]
+}
+
